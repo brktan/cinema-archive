@@ -8,7 +8,8 @@ import javax.validation.constraints.Size;
 public class Category {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "category", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "category", sequenceName = "CATEGORY_ID_SEQ")
     private Long id;
 
     @Column(length = 30)

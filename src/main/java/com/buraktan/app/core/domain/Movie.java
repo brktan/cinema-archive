@@ -9,7 +9,8 @@ import java.util.Date;
 public class Movie {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "movie", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "movie", sequenceName = "MOVIE_ID_SEQ")
     private Long id;
 
     @Column(length = 50)
@@ -20,10 +21,6 @@ public class Movie {
     private Date publishDate;
 
     private Double rating;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "CATEGORY_ID", referencedColumnName = "ID", foreignKey = @ForeignKey(name = "MOVIE_CATEGORY_ID"))
-    private Category category;
 
     public Long getId() {
         return id;
@@ -55,14 +52,6 @@ public class Movie {
 
     public void setRating(Double rating) {
         this.rating = rating;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
     }
 
     @Override
