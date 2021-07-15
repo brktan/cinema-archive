@@ -10,6 +10,7 @@ import org.hibernate.query.Query;
 import java.util.List;
 
 public class MovieDao {
+
     public List<Movie> findAllMovies() {
         List<Movie> movieList = null;
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -36,25 +37,39 @@ public class MovieDao {
         return movie;
     }
 
-    public void deleteMovie(long mId){
+    public void deleteMovie(long id) {
         SessionFactory factory = HibernateUtil.getSessionFactory();
         Session session = factory.openSession();
         Transaction transaction = session.beginTransaction();
-    try {
-        String qryString = "delete from Movie m where m.id=:mId";
-        Query query = session.createQuery(qryString);
-        query.setParameter("mId", mId);
-        int count = query.executeUpdate();
-        System.out.println(count + " Record(m) Deleted.");
+        try {
+            String qryString = "Delete From Movie m Where m.id=:mId";
+            Query query = session.createQuery(qryString);
+            query.setParameter("mId", id);
+            int count = query.executeUpdate();
+            System.out.println(count + " Record(m) Deleted.");
 
-        transaction.commit();
-        session.clear();
-        session.close();
-        System.out.println("Transaction Completed !");
+            transaction.commit();
+            session.clear();
+            session.close();
+            System.out.println("Transaction Completed !");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
-    catch (Exception e){
-        System.out.println(e.getMessage());
-    }
+
+    public Movie findMovieById(long id) {
+        SessionFactory factory = HibernateUtil.getSessionFactory();
+        Session session = factory.openSession();
+        Movie movie = null;
+        try {
+            String qryString = "Select movie From Movie movie Where movie.id=:mId";
+            Query query = session.createQuery(qryString);
+            query.setParameter("mId", id);
+            movie = (Movie) query.uniqueResult();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return movie;
     }
 }
 

@@ -58,4 +58,19 @@ public class CategoryDao {
     }
 
 
+    public Category findCategoryById(long id) {
+
+        SessionFactory factory = HibernateUtil.getSessionFactory();
+        Session session = factory.openSession();
+        Category category = null;
+        try {
+            String qryString = "Select category From Category category Where category.id=:cId";
+            Query query = session.createQuery(qryString);
+            query.setParameter("cId", id);
+            category = (Category) query.uniqueResult();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return category;
+    }
 }

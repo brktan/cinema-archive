@@ -1,15 +1,14 @@
-package com.buraktan.test;
+package com.buraktan.test.dao;
 
-import com.buraktan.app.core.dao.CategoryDao;
 import com.buraktan.app.core.dao.MovieDao;
-import com.buraktan.app.core.domain.Category;
 import com.buraktan.app.core.domain.Movie;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Date;
 import java.util.List;
 
-public class DaoTest {
+public class MovieDaoTest {
 
     @Test
     public void findAllMoviesTest() {
@@ -32,7 +31,7 @@ public class DaoTest {
         date.setYear(2008);
 
         Movie movie = new Movie();
-        movie.setName("Dark Knight");
+        movie.setName("Saw IV");
         movie.setRating(8.8);
         movie.setPublishDate(date);
 
@@ -49,33 +48,12 @@ public class DaoTest {
     }
 
     @Test
-    public void findAllCategoriesTest() {
-
-        List<Category> categoryList;
+    public void findMovieByIdTest() {
 
         MovieDao movieDao = new MovieDao();
-        CategoryDao categoryDao = new CategoryDao();
-        categoryList = categoryDao.findAllCategories();
-
-        for (Category category : categoryList) {
-            System.out.println(category);
-        }
+        Movie movie = movieDao.findMovieById(3l);
+        Assert.assertNotNull(movie);
+        System.out.println(movie);
     }
 
-    @Test
-    public void saveCategoryTest() {
-
-        Category category = new Category();
-        category.setName("Comedy");
-
-        CategoryDao categoryDao = new CategoryDao();
-        categoryDao.saveCategory(category);
-    }
-
-    @Test
-    public void deleteCategoryTest() {
-
-        CategoryDao categoryDao = new CategoryDao();
-        categoryDao.deleteCategory(7L);
-    }
 }
