@@ -75,7 +75,7 @@ public class MovieDao {
         return movieList;
     }
 
-    public Movie findMovieById(long id) {
+    public Movie getMovieDetails(long id) {
         SessionFactory factory = HibernateUtil.getSessionFactory();
         Session session = factory.openSession();
         Movie movie = null;

@@ -56,7 +56,7 @@ public class MovieDaoTest {
     public void findMovieByIdTest() {
 
         MovieDao movieDao = new MovieDao();
-        Movie movie = movieDao.findMovieById(1l);
+        Movie movie = movieDao.getMovieDetails(1l);
         Assert.assertNotNull(movie);
         System.out.println(movie);
     }

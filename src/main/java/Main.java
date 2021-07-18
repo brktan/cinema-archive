@@ -33,6 +33,7 @@ public class Main {
                     break;
 
                 case 2:
+                    listCategories();
                     Scanner scan2 = new Scanner(System.in);
                     String c;
                     System.out.println("Add to Category Name:");
@@ -40,7 +41,10 @@ public class Main {
                     Category category = new Category();
                     category.setName(c);
                     addCategory(category);
+
                     System.out.println("-----------------------\n"
+                            + "Add to Category Successful\n"
+                            + "-----------------------\n"
                             + "To Continue:0\n"
                             + "to Exit:7");
                     break;
@@ -55,6 +59,8 @@ public class Main {
                     Category category2 = categoryDao.findCategoryById(b);
                     deleteCategory(category2);
                     System.out.println("-----------------------\n"
+                            + "Delete to Category Successful\n"
+                            + "-----------------------\n"
                             + "To Continue:0\n"
                             + "to Exit:7");
                     break;
@@ -63,12 +69,13 @@ public class Main {
                     listCategories();
                     Scanner scanner3 = new Scanner(System.in);
                     Long d;
-                    System.out.println("Delete to Category Id:");
+                    System.out.println("Enter the Category Id:");
                     d = scanner3.nextLong();
                     Category category3 = categoryDao.findCategoryById(d);
                     List<Movie> movieList = listMovie(category3);
                     for (Movie movie : movieList) {
-                        System.out.println(movie);
+                        System.out.println("-----------------------\n"
+                                + movie);
                     }
                     System.out.println("-----------------------\n"
                             + "To Continue:0\n"
@@ -83,7 +90,12 @@ public class Main {
                     break;
 
                 case 6:
-                    getMovieDetail();
+                    listMovies();
+                    Scanner scanner5 = new Scanner(System.in);
+                    long m;
+                    System.out.println("Movie's Details Id:");
+                    m = scanner5.nextLong();
+                    getMovieDetail(m);
                     System.out.println("-----------------------\n"
                             + "To Continue:0\n"
                             + "to Exit:7");
@@ -154,31 +166,36 @@ public class Main {
 
 
     public static List searchMovie() {
-        Scanner scan = new Scanner(System.in);
-        List<Movie> movieList = new ArrayList<Movie>();
+        Scanner scanner6 = new Scanner(System.in);
+        List<Movie> movieList;
         String m;
-        List<String> a = new ArrayList<String>();
         System.out.println("Movie's Name:");
-        m = scan.nextLine();
-        a.add(m);
+        m = scanner6.nextLine();
 
         MovieDao movieDao = new MovieDao();
-        movieList = (List<Movie>) movieDao.findMovieByName(m);
+        movieList = movieDao.findMovieByName(m);
         for (Movie movie : movieList) {
             System.out.println("--------------------------\n" + movie);
         }
         return null;
     }
 
-    public static void getMovieDetail() {
-        Scanner scan = new Scanner(System.in);
-        long m;
-        System.out.println("Movie's Details Id:");
-        m = scan.nextLong();
-
+    public static void getMovieDetail(Long id) {
         MovieDao movieDao = new MovieDao();
-        Movie movie = movieDao.findMovieById(m);
+        Movie movie = movieDao.getMovieDetails(id);
         System.out.println("--------------------------\n" + movie);
     }
 
+    public static List listMovies() {
+        List<Movie> movieList;
+        MovieDao movieDao = new MovieDao();
+        movieList = movieDao.findAllMovies();
+        System.out.println("--------------------------\n" + "Category List:");
+        for (Movie movie : movieList) {
+            System.out.println(movie);
+        }
+        return null;
+    }
+
 }
+
