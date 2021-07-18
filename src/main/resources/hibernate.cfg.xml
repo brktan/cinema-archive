@@ -15,7 +15,7 @@
 
         <property name="connection.autocommit">true</property>
         <property name="hbm2ddl.auto">update</property>
-        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.show_sql">false</property>
 
         <mapping class="com.buraktan.app.core.domain.Movie"/>
         <mapping class="com.buraktan.app.core.domain.Category"/>

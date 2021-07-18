@@ -2,25 +2,33 @@ package com.buraktan.app.core.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "MOVIE")
 public class Movie {
 
+    @TableGenerator(
+            name = "yourTableGenerator",
+            allocationSize = 0,
+            initialValue = 1)
     @Id
-    @GeneratedValue(generator = "movie", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "movie", sequenceName = "MOVIE_ID_SEQ")
-    private Long id;
+    @GeneratedValue(
+            strategy = GenerationType.TABLE,
+            generator = "yourTableGenerator")
+    public Long id;
 
     @Column(length = 50)
     @Size(max = 50)
-    private String name;
+    public String name;
 
-    @Temporal(TemporalType.DATE)
-    private Date publishDate;
+    public LocalDate publishDate;
 
-    private Double rating;
+    public Double rating;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID_CATEGORY", foreignKey = @ForeignKey(name = "FK_MOVIE_CATEGORY"))
+    private Category category;
 
     public Long getId() {
         return id;
@@ -38,11 +46,11 @@ public class Movie {
         this.name = name;
     }
 
-    public Date getPublishDate() {
+    public LocalDate getPublishDate() {
         return publishDate;
     }
 
-    public void setPublishDate(Date publishDate) {
+    public void setPublishDate(LocalDate publishDate) {
         this.publishDate = publishDate;
     }
 
@@ -54,8 +62,18 @@ public class Movie {
         this.rating = rating;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     @Override
     public String toString() {
-        return name + " - " + publishDate;
+        return id + " - " + name + " - " + publishDate + " - " + rating + " - " + category.getId();
     }
+
+
 }

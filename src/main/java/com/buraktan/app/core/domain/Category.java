@@ -1,5 +1,6 @@
 package com.buraktan.app.core.domain;
 
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 
@@ -7,10 +8,15 @@ import javax.validation.constraints.Size;
 @Table(name = "CATEGORY")
 public class Category {
 
+    @TableGenerator(
+            name = "yourTableGenerator",
+            allocationSize = 0,
+            initialValue = 1)
     @Id
-    @GeneratedValue(generator = "category", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "category", sequenceName = "CATEGORY_ID_SEQ")
-    private Long id;
+    @GeneratedValue(
+            strategy = GenerationType.TABLE,
+            generator = "yourTableGenerator")
+    public Long id;
 
     @Column(length = 30)
     @Size(max = 30)
@@ -34,6 +40,6 @@ public class Category {
 
     @Override
     public String toString() {
-        return id + " - " + name;
+        return id + " " + name;
     }
 }

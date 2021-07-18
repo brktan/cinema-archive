@@ -1,6 +1,7 @@
 package com.buraktan.app.views;
 
-import com.buraktan.app.views.helloworld.HelloWorldView;
+import com.buraktan.app.views.category.CategoryView;
+import com.buraktan.app.views.movie.MovieView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.Text;
@@ -25,12 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * The main view is a top-level placeholder for other views.
- */
 @PWA(name = "Cinema Archive", shortName = "Cinema Archive", enableInstallPrompt = false)
 @Theme(themeFolder = "cinemaarchive")
-@PageTitle("Main")
+@PageTitle("Homepage")
 public class MainLayout extends AppLayout {
 
     public static class MenuItemInfo {
@@ -116,8 +114,9 @@ public class MainLayout extends AppLayout {
     }
 
     private List<Tab> createMenuItems() {
-        MenuItemInfo[] menuItems = new MenuItemInfo[]{ //
-                new MenuItemInfo("Hello World", "la la-globe", HelloWorldView.class), //
+        MenuItemInfo[] menuItems = new MenuItemInfo[]{
+                new MenuItemInfo("Movie", "la la-globe", MovieView.class),
+                new MenuItemInfo("Category", "la la-globe", CategoryView.class),
 
         };
         List<Tab> tabs = new ArrayList<>();

@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MovieDao {
@@ -57,6 +58,23 @@ public class MovieDao {
         }
     }
 
+    public List<Movie> findMovieByName(String name) {
+        SessionFactory factory = HibernateUtil.getSessionFactory();
+        Session session = factory.openSession();
+
+        List<Movie> movieList = new ArrayList<Movie>();
+        try {
+            String qryString = "Select movie From Movie movie Where movie.name like concat('%',:mName,'%')";
+            Query query = session.createQuery(qryString);
+            query.setParameter("mName", name);
+            movieList = query.list();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return movieList;
+    }
+
     public Movie findMovieById(long id) {
         SessionFactory factory = HibernateUtil.getSessionFactory();
         Session session = factory.openSession();
@@ -71,5 +89,22 @@ public class MovieDao {
         }
         return movie;
     }
+
+    public List<Movie> findMovieByCategoryId(long id) {
+        SessionFactory factory = HibernateUtil.getSessionFactory();
+        Session session = factory.openSession();
+        List<Movie> movieList = new ArrayList<Movie>();
+        try {
+            String qryString = "Select movie From Movie movie Where movie.category.id=:mId";
+            Query query = session.createQuery(qryString);
+            query.setParameter("mId", id);
+            System.out.println("asjgdiusadhljksaghdasndskdml");
+            movieList = query.list();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return movieList;
+    }
+
 }
 
